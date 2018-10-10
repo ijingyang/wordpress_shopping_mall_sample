@@ -6,6 +6,7 @@
     </footer><!-- #footer end -->
   </div><!-- #footer-container end -->
 </div><!-- #wrap end -->
+<script src="<?php bloginfo('template_url'); ?>/js/scroll.js"></script>
 <?php wp_footer(); ?>
 </body>
 </html>

@@ -2,7 +2,31 @@
 <html dir="ltr" lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><?php bloginfo('name'); ?></title>
+<title>
+  <?php
+    // $page -> 投稿や固定ページをマルチページ化したもの
+    // $paged -> 一覧ページでのページ番号
+    global $page, $paged;
+    if(is_search()):
+      wp_title('', true, 'left');
+      echo ' | ';
+    else:
+      wp_title('|', true, 'right');
+    endif;
+
+    bloginfo('name');
+
+    if(is_front_page()):
+      echo ' | ';
+      bloginfo('description');
+    endif;
+
+    if($paged >= 2 || $page >= 2):
+      echo ' | ' . sprintf('%sページ', max($paged, $page));
+    endif;
+
+  ?>
+</title>
 <link rel="apple-touch-icon" href="<?php bloginfo('template_url'); ?>/images/touch-icon.png" />
 <link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/images/favicon.ico" />
 <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('stylesheet_url'); ?>" />
@@ -32,12 +56,7 @@
          ?>
         <div id="header-widget-area">
           <aside class="widget_search">
-            <form role="search" id="searchform">
-              <div>
-                <input type="text" id="s" />
-                <input type="submit" id="searchsubmit"/>
-              </div>
-            </form><!-- #searchform end -->
+            <?php echo get_search_form(); ?>
           </aside><!-- .widget_search end -->
         </div><!-- #header-widget-area end -->
       </div><!-- #utility-group end -->
@@ -61,3 +80,8 @@
       endif;
     ?>
     <section id="contents-body">
+      <?php
+        if(!is_front_page() && function_exists('bread_crumb')):
+          bread_crumb('navi_element=nav&elm_id=bread-crumb');
+        endif;
+      ?>

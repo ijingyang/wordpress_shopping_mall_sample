@@ -1,21 +1,13 @@
-<!-- 固定ページ用テンプレート -->
 <?php get_header(); ?>
       <section id="contents">
         <header class="page-header">
-          <?php the_category_image(); ?>
           <h1 class="page-title">
-            <?php
-              if(is_author()):
-                echo esc_html(get_the_author_meta('display_name', get_query_var('author')));
-              else:
-                single_cat_title();
-              endif;
-            ?>
+            「<?php the_search_query(); ?>」の検索結果
           </h1>
         </header>
         <div class="posts">
           <?php
-            if(have_posts()):
+            if(have_posts() && get_search_query()):
               while(have_posts()):
                 the_post();
                 get_template_part('content-archive');
@@ -23,6 +15,10 @@
               if(function_exists('page_navi')):
                 page_navi('elm_class=page-nav&edge_type=span');
               endif;
+            else:
+          ?>
+            <p>該当する記事が存在していません。</p>
+          <?php
             endif;
            ?>
         </div>

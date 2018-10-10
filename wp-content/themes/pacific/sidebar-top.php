@@ -1,67 +1,62 @@
       <section id="sidebar">
         <aside class="rss_link">
-          <a href="#"><img src="<?php bloginfo('template_url'); ?>/images/btn_rss_feed.png" width="250" height="28" alt="RSS" /></a>
+          <?php
+            the_feed_link('<img src="' . get_template_directory_uri()
+             . '/images/btn_rss_feed.png" width="250" height="28" alt="RSS" />');
+           ?>
         </aside>
         <div id="primary" class="widget-area">
-          <aside id="event-info" class="news-list">
-            <h1>イベント開催情報</h1>
+          <?php
+            $sidebar_cat_list = array(
+              'event' => 2,
+              'malls' => 2,
+              'information' => 2,
+            );
+
+            foreach ($sidebar_cat_list as $sidebar_cat_name => $sidebar_cat_num):
+              $sidebar_posts = new WP_Query('posts_per_page=' . $sidebar_cat_num
+               . '&category_name=' . $sidebar_cat_name);
+           ?>
+
+          <aside id="<?php echo $sidebar_cat_name; ?>" class="news-list">
+            <h1><?php echo esc_html(get_category_by_slug($sidebar_cat_name)->name); ?></h1>
             <div class="info-wrap">
               <ul>
+                <?php
+                  if($sidebar_posts->have_posts()):
+                    while($sidebar_posts->have_posts()):
+                      $sidebar_posts->the_post();
+                ?>
                 <li>
-                  <time class="entry-date" datetime="2012-01-01">entry-date</time>
-                  <h2><a href="#">event-info_title_1</a></h2>
-                  <a href="#"><img width="61" height="61" src="<?php bloginfo('template_url'); ?>/images/top/post_image.png" alt="「バンコクロイヤルガーデンフェア」開催のお知らせ" /></a>
-                  <p>テキストテキストテキストテキストテキストテキストテキストテキスト</p>
+                  <time class="entry-date" datetime="<?php the_time('Y-m-d'); ?>">
+                    <?php the_time(get_option('date_format')); ?>
+                  </time>
+                  <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                  <a href="<?php the_permalink(); ?>">
+                    <?php the_post_thumbnail('small_thumbnail',
+                    array(
+                      'alt' => the_title_attribute('echo=0'),
+                      'title' => the_title_attribute('echo=0'),
+                    ));
+                    ?>
+                  </a>
+                  <?php the_short_excerpt(); ?>
                 </li>
-                <li>
-                  <time class="entry-date" datetime="2012-01-01">entry-date</time>
-                  <h2><a href="#">event-info_title_2</a></h2>
-                  <a href="#"><img width="61" height="61" src="<?php bloginfo('template_url'); ?>/images/top/post_image.png" alt="「汐留 味紀行」開催のお知らせ" /></a>
-                  <p>テキストテキストテキストテキストテキストテキストテキストテキスト</p>
-                </li>
+                <?php
+                    endwhile;
+                  endif;
+                 ?>
               </ul>
-              <span class="link-text"><a href="#">イベント開催情報一覧</a></span>
-            </div><!-- .info-wrap end -->
-          </aside><!-- #event-info end -->
-          <aside id="malls-info" class="news-list">
-            <h1>新規モール出店情報</h1>
-            <div class="info-wrap">
-              <ul>
-                <li>
-                  <time class="entry-date" datetime="2012-01-01">entry-date</time>
-                  <h2><a href="#">malls-info_title_1</a></h2>
-                  <a href="#"><img width="61" height="61" src="<?php bloginfo('template_url'); ?>/images/top/post_image.png" alt="ホノルルに「カメハメハモール」オープン" /></a>
-                  <p>テキストテキストテキストテキストテキストテキストテキストテキスト</p>
-                </li>
-                <li>
-                  <time class="entry-date" datetime="2012-01-01">entry-date</time>
-                  <h2><a href="#">malls-info_title_2</a></h2>
-                  <a href="#"><img width="61" height="61" src="<?php bloginfo('template_url'); ?>/images/top/post_image.png" alt="サンフランシスコ・ノブヒル地区に「ゴールデンゲートモール」オープン" /></a>
-                  <p>テキストテキストテキストテキストテキストテキストテキストテキスト</p>
-                </li>
-              </ul>
-              <span class="link-text"><a href="#">モール出店情報一覧</a></span>
-            </div><!-- #info-wrap end -->
-          </aside><!-- #malls-info end -->
-          <aside id="information-info" class="news-list">
-            <h1>お知らせ</h1>
-            <div class="info-wrap">
-              <ul>
-                <li>
-                  <time class="entry-date" datetime="2012-01-01">entry-date</time>
-                  <h2><a href="#">information-info_title_1</a></h2>
-                  <a href="#"><img width="61" height="61" src="<?php bloginfo('template_url'); ?>/images/top/post_image.png" alt="人材募集のお知らせ" /></a>
-                  <p>テキストテキストテキストテキストテキストテキストテキストテキスト</p>
-                </li>
-                <li>
-                  <time class="entry-date" datetime="2012-01-01">entry-date</time>
-                  <h2><a href="#">information-info_title_2</a></h2>
-                  <a href="#"><img width="61" height="61" src="<?php bloginfo('template_url'); ?>/images/top/post_image.png"  alt="ホノルル支店を開設いたしました。" /></a>
-                  <p>テキストテキストテキストテキストテキストテキストテキストテキスト</p>
-                </li>
-              </ul>
-              <span class="link-text"><a href="#">お知らせ一覧</a></span>
-            </div><!-- .info-wrap end -->
-          </aside><!-- #information-info end -->
+              <span class="link-text">
+                <a href="<?php echo get_term_link($sidebar_cat_name, 'category'); ?>">
+                  <?php echo esc_html(get_category_by_slug($sidebar_cat_name)->name); ?>一覧
+                </a>
+              </span>
+            </div>
+          </aside>
+          <?php
+              wp_reset_postdata();
+            endforeach;
+          ?>
         </div><!-- #primary end -->
       </section><!-- #sidebar end -->
