@@ -1,0 +1,15 @@
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /pacific/
+RewriteRule ^index\.php$ - [L]
+
+RewriteCond %{REQUEST_URI} !\.(gif|css|js|swf|jpeg|jpg|jpe|png|ico|swd|pdf)$
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /pacific/index.php [L]
+</IfModule>
+
+# END WordPress

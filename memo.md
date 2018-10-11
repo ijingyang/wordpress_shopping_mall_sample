@@ -68,7 +68,9 @@
 
 ## カスタムヘッダーを管理画面に追加する
 
-```php functions.php
+```php
+functions.php
+
 // Custom header
 add_theme_support(
   'custom-header',
@@ -83,7 +85,9 @@ add_theme_support(
 
 
 ## カスタムヘッダーの画像とfunctions.phpの設定を取得
-```php header.php
+```php
+header.php
+
 <img src="<?php header_image(); ?>"
  width="<?php echo get_custom_header()->width; ?>"
  height="<?php echo get_custom_header()->height; ?>" alt="" />
@@ -92,7 +96,9 @@ add_theme_support(
 
 ## WPループにより、固定ページのタイトルと記事を表示
 
-```php page.php
+```php
+page.php
+
 <?php
   if(have_posts()): //記事があるか判定
     while(have_posts()):
@@ -117,14 +123,18 @@ add_theme_support(
 
 ## ページ識別、IDに応じたクラスを出力するテンプレートタグ
 
-```php header.php
+```php
+header.php
+
 <body <?php body_class(); ?>>
 ```
 
 
 ## トップページの場合のみ表示
 
-```php front-page.php
+```php
+front-page.php
+
 <?php
   if(is_front_page()) :
  ?>
@@ -141,7 +151,9 @@ add_theme_support(
 
 ## カスタムメニューを追加（Apperanceから確認可能）
 
-```php functions.php
+```php
+functions.php
+
 // Custom menu
 register_nav_menus(
   array(
@@ -154,7 +166,9 @@ register_nav_menus(
 
 ## カスタムメニューを表示
 
-```php header.php
+```php
+header.php
+
 <?php
   wp_nav_menu(arrary(
     'container' => 'nav', // 出力されるulをnavでラップ
@@ -200,7 +214,9 @@ register_nav_menus(
 
 ## アイキャッチ画像の利用とサイズ指定
 
-```php functions.php
+```php
+functions.php
+
 // Activate featured image
 add_theme_support('post-thumbnails');
 
@@ -211,7 +227,9 @@ set_post_thumbnail_size(90, 90, true);
 
 ## 画像のサイズ指定
 
-```php functions.php
+```php
+functions.php
+
 // Set sidebar image size
 add_image_size('small_thumbnail', 61, 61, true);
 ```
@@ -219,7 +237,9 @@ add_image_size('small_thumbnail', 61, 61, true);
 
 ## サムネイル画像を投稿一覧に表示させる
 
-```php content-archive.php
+```php
+content-archive.php
+
 <?php the_post_thumbnail('large_thumbnail', //アイキャッチ用のimageタグを出力
 array(
   'alt' => the_title_attribute('echo=0'), // alt属性に該当記事のタイトルを付与
@@ -230,7 +250,9 @@ array(
 
 ## トップページに特定の固定ページサムネイルを表示
 
-```php front-page.php
+```php
+front-page.php
+
 $mall_posts = new WP_Query('post_per_page=-1&post_type=page&orderby=menu_order&order=asc&post_parent=45');
 if($mall_posts->have_posts()):
   $count = 1;
@@ -283,13 +305,17 @@ wp_reset_postdata();
 
 ## サムネイル画像のサイズについて
 
-```php functions.php
+```php
+functions.php
+
 set_post_thumbnail_size(90, 90, true);
 ```
 
 functions.phpで設定した内容を使うには'post-thumbnail'を指定
 
-```php front-page.php
+```php
+front-page.php
+
 <?php the_post_thumbnail('post-thumbnail', // => $sizeを指定
 array(
   'alt' => the_title_attribute('echo=0'),
@@ -316,7 +342,8 @@ https://elearn.jp/wpman/function/get_term_link.html
 
 ## 特定のプラグインにあてるCSSのディレクトリパスを差替え
 
-```php sidebar-top.php
+```php
+sidebar-top.php
 
 // change URL path for CSS of Child Pages Shortcode
 function change_child_pages_shortcode_css() {
@@ -330,7 +357,8 @@ add_filter('child-pages-shortcode-stylesheet', 'change_child_pages_shortcode_css
 
 ## All in One Sub Navi Widgetの設定
 
-```php functions.php
+```php
+functions.php
 
 register_sidebar(array(
   'name' => 'サイドバーウィジェットエリア（上）',
@@ -343,13 +371,17 @@ register_sidebar(array(
 ));
 ```
 
-```php sidebar.php
+```php
+sidebar.php
+
 <?php dynamic_sidebar('primary-widget-area') ?> // 上で指定したIDを引数に渡す
 ```
 
 ## パンくずリストをPrime Strategy Bread Crumbで実装
 
-```php header.php
+```php
+header.php
+
 <?php
   if(!is_front_page() && function_exists('bread_crumb')):
     bread_crumb('navi_element=nav&elm_id=bread-crumb');
@@ -360,7 +392,9 @@ register_sidebar(array(
 
 ## トップに戻るボタンを実装
 
-```php back_to_top.php
+```php
+back_to_top.php
+
 <aside id="back_to_top">
   <a href="#wrap" onclick="scrollup(); return false;">
     <img src="<?php bloginfo('template_url'); ?>/images/btn_back_to_top.png"
@@ -369,18 +403,24 @@ register_sidebar(array(
 </aside>
 ```
 
-```php footer.php
+```php
+footer.php
+
 <script src="<?php bloginfo('template_url'); ?>/js/scroll.js"></script>
 ```
 
-```php page.php, single.php, archive.php
+```php
+page.php, single.php, archive.php
+
 <?php get_template_part('back_to_top'); ?>
 ```
 
 
 ## 作成者名の表示と作成者名別の一覧リンクを表示
 
-```php content-archive.php
+```php
+content-archive.php
+
 <?php
   if(!is_search()):
  ?>
@@ -393,7 +433,9 @@ register_sidebar(array(
 
 ## タイトル表示の記述をする
 
-```php archive.php
+```php
+archive.php
+
 <?php
   if(is_author()):
     echo esc_html(get_the_author_meta('display_name', get_query_var('author')));
@@ -417,11 +459,15 @@ endif;
 
 ## サイト内検索を動作させる
 
-```php header.php
+```php
+header.php
+
 <?php echo get_search_form(); ?>
 ```
 
-```php search.php
+```php
+search.php
+
 <?php get_header(); ?>
       <section id="contents">
         <header class="page-header">
@@ -455,7 +501,9 @@ endif;
 
 ## 投稿ページ間のナビゲーションを実装
 
-```php content.php
+```php
+content.php
+
 <?php
   if(is_single()):
 ?>
@@ -477,7 +525,12 @@ endif;
 
 ## 抜粋分が自動的に生成される場合のデフォルト値などを変更
 
+この機能は、WordPressの表示言語が日本語の場合のみ有効のため、
+英語版などはべつのやり方を知っておく必要があるとおもわれる。
+
 ```php
+functions.php
+
 //抜粋分が自動的に生成される場合に最後に付与される文字列を変更
 function cms_excerpt_more() {
   return ' ...';
@@ -495,14 +548,18 @@ add_filter('excerpt_mblength', 'cms_excerpt_length');
 
 ## 抜粋分を固定ページの編集画面から入力できるようにする
 
-```php functions.php
+```php
+functions.php
+
 add_post_type_support('page', 'excerpt');
 ```
 
 
 ## 30文字表示抜粋（自動生成時）表示テンプレートタグの定義
 
-```php functions.php
+```php
+functions.php
+
 // 30文字表示抜粋（自動生成時）表示テンプレートタグの定義
 function the_short_excerpt() {
   add_filter('excerpt_mblength', 'short_excerpt_length', 11);
@@ -515,14 +572,18 @@ function short_excerpt_length() {
 }
 ```
 
-```php front-page.php, sidebar-top.php
+```php
+front-page.php, sidebar-top.php
+
 <?php the_short_excerpt(); ?>
 ```
 
 
 ## 50文字表示抜粋（自動生成時）表示テンプレートタグの定義
 
-```php functions.php
+```php
+functions.php
+
 // 50文字表示抜粋（自動生成時）表示テンプレートタグの定義
 function the_pickup_excerpt() {
   add_filter('get_the_excerpt', 'get_pickup_excerpt', 0);
@@ -549,21 +610,27 @@ function short_excerpt_length() {
 }
 ```
 
-```php front-page.php
+```php
+front-page.php
+
 <?php the_pickup_excerpt(); ?>
 ```
 
 
 ## RSSのリンクを出力させる
 
-```php sidebar-top.php
+```php
+sidebar-top.php
+
 <?php
   the_feed_link('<img src="' . get_template_directory_uri()
    . '/images/btn_rssfeed.png" width="250" height="28" alt="RSS" />');
  ?>
 ```
 
-```php sidebar.php
+```php
+sidebar.php
+
 <?php
   if(is_category('column') || (is_single() && in_category('column'))) :
 ?>
@@ -586,7 +653,9 @@ $image = get_the_post_thumbnail(
           array('id' => 'category_image'));　=> サムネイル画像のエレメントを取得
 ```
 
-```php functions.php
+```php
+functions.php
+
 //カテゴリ画像の表示
 // 1. アイキャッチ画像が設定されている場合は、アイキャッチ画像を使用
 // 2. アイキャッチ画像が設定されていない固定ページで、
@@ -620,7 +689,9 @@ https://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3
 
 ## (SEO対策)タイトルを適切に表示させる
 
-```php header.php
+```php
+header.php
+
 <?php
   // $page -> 投稿や固定ページをマルチページ化したもの
   // $paged -> 一覧ページでのページ番号
@@ -649,18 +720,23 @@ https://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3
 
 ## コラムにコメント欄を表示
 
-```php single.php
+```php
+single.php
+
 if (in_category('column')):
   comments_template('', true);
 endif;
 ```
 
 
-## 要見直し（コラムのみコメント可にする関数）
+## コラムのみコメント可にする関数（要見直し）
 
-```php functions.php
+なぜかコラムでもコメントできない・・・保留で
+
+```php
+functions.php
+
 // コラムカテゴリーのみコメントできるようにする
-// なぜかコメントできない・・・保留で
 // function comments_allow_only_column($post_id) {
 //   $open = true;
 //   if(!in_category('column')) {
@@ -674,7 +750,9 @@ endif;
 
 ## コメントテンプレートの作成
 
-```php comments.php
+```php
+comments.php
+
 <?php
   if(post_password_required()):
     return;
@@ -718,7 +796,9 @@ endif;
 
 ## はてなブックマークボタンを追加
 
-```php social-button.php
+```php
+social-button.php
+
 <ul class="social-buttons">
   <li>
     <a href="http://b.hatena.ne.jp/entry/<?php the_permalink(); ?>" class="hatena-bookmark-button"
@@ -734,7 +814,9 @@ endif;
 
 ```
 
-```php content.php
+```php
+content.php
+
 <?php
   if(is_single() && in_category('column')) :
     get_template_part('social-button');
@@ -763,7 +845,9 @@ FacebookやGoogle+で使われている、プログラムにページの意味�
 
 https://cont-hub.com/knowledge/glossary/ogp/
 
-```php header_ogp.php
+```php
+header_ogp.php
+
 <meta property="fb:admins" content="155536861149885" />
 <meta property="og:title" content="<?php the_title(); ?>" />
 <meta property="og:type" content="article" />
@@ -785,7 +869,9 @@ https://cont-hub.com/knowledge/glossary/ogp/
 
 ```
 
-```php functions.php
+```php
+functions.php
+
 // OGPのための各種設定
 // アイキャッチ画像のURL取得
 function get_thumbnail_image_url() {
@@ -805,7 +891,9 @@ function get_ogp_excerpted_content($content) {
 }
 ```
 
-```php header.php
+```php
+header.php
+
 <?php
   if(is_single() && in_category('column')):
     get_template_part('header_ogp');
@@ -832,18 +920,6 @@ https://www.cloud9works.net/sns/facebook/setting-for-facebook-page-plugin/
 
 https://lblevery.com/sfn/attract/facebook-page/facebook-comments/
 
-一人もくもく会において、作業用BGMをおススメしあうSNS
-Pain：一人で作業するのはいいけど、適度な刺激がほしい
-Pain：いま何となく聞いている音楽はあるけど、みんなは何を聞いているんだろう
-Pain：おすすめサイトを巡礼しても同じような結果しか出てこない
-Pain：もう少し自分好みの音楽を共有しあえる日曜プログラマの友人がほしい
-
-対象：20～40代
-性別：男
-職業：エンジニア、エンジニア見習い、フリーランス
-性格：普段、エンジニア同士の交流がすくない
-　　　ひとりもくもく会をするような人と出会いがすくない
-
 
 ## 他に使用したプラグイン
 
@@ -862,7 +938,9 @@ P231~
 
 ## Custom Post Type UIで設定した店舗情報の表示
 
-```php functions.php
+```php
+functions.php
+
 // モール開発実績各ページのshortcode
 function posts_shortcode($args) {
   $template = dirname(__FILE__) . '/posts.php';
@@ -899,7 +977,9 @@ http://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%
 https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/get_post_custom
 
 
-```php post.php
+```php
+post.php
+
 <section class="shops">
   <?php echo get_the_post_thumbnail($post->ID, 'large_thumbnail',
   array(
@@ -940,45 +1020,40 @@ https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3
 [posts term={mall_taxonomy}]
 ```
 
-## Google mapを表示させるショートコードを追加
+## パフォーマンスの注意事項
 
-```php
+### Case1：パーマリンク切れによるパフォーマンス低下
 
+パーマリンクのリンク先がリンク切れになっていた場合、WordPressが多重起動して遅くなる！！
+  - パーマリンクはWebサーバのリライト機能を使っているため、リンクが存在しないときはWPの負担になる
+
+対応策： .htaccessに以下の一文を追記する
+
+```.htaccess
+RewriteCond %{REQUEST_URI} !\.(gif|css|js|swf|jpeg|jpg|jpe|png|ico|swd|pdf)$
 ```
 
+### Case2：日本語の翻訳ファイル読込みによるパフォーマンス低下
 
-## あああ
+対応策： 001 Prime Strategy Translate Acceleratorを使う
 
-```php
+* 001 Prime Strategy Translate Acceleratorのcacheディレクトリのパーミッション確認・変更を忘れないように
 
-```
+### Case3：さらなる高速化のために・・・
 
-
-## あああ
-
-```php
-
-```
+対応策：WP Super cacheを使う
+ もし使えば、10～100倍の高速化が見込めるらしい
+ 細かい設定方法は P267を参照
 
 
+## 本番サーバーへの移行方法は P273以降を参照
 
-## あああ
-
-```php
-
-```
-
-
-## あああ
-
-```php
-
-```
+ - サーバーへのWPインストール方法
+ - 仮想環境のWP設定をXMLでエクスポート（WordPress Importerプラグインを使う）
+ - XMLを本番環境へインポート（WordPress Importerプラグインを使う）
 
 
+## その他
 
-## あああ
-
-```php
-
-```
+ - XAMPPの設定方法 P286～299
+ - 使用したプラグイン一覧 P301~305

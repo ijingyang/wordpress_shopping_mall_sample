@@ -1,4 +1,4 @@
-<meta property="fb:admins" content="155536861149885" />
+<meta property="fb:admins" content="<?php if(function_exists('fb_admins')) fb_admins(); ?>" />
 <meta property="og:title" content="<?php the_title(); ?>" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="<?php the_permalink(); ?>" />
