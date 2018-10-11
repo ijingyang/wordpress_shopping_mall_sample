@@ -200,4 +200,7 @@ function posts_shortcode($args) {
 }
 
 add_shortcode('posts', 'posts_shortcode');
- ?>
+
+
+
+?>
