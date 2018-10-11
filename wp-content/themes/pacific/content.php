@@ -4,6 +4,11 @@
             <h1 class="page-title">
               <?php the_title(); ?>
             </h1>
+            <?php
+              if(is_single() && in_category('column')) :
+                get_template_part('social-button');
+              endif;
+            ?>
           </header>
           <section class="entry-content">
             <?php the_content(); ?>
@@ -25,8 +30,12 @@
            <?php endif; ?>
           </section>
         </article>
+
         <?php
           if(is_single()):
+            if(in_category('column')) :
+              get_template_part('social-button');
+            endif;
         ?>
         <nav class="adjacent_post_links">
           <ul>

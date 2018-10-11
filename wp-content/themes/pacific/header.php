@@ -34,6 +34,11 @@
   <meta http-equiv="Imagetoolbar" content="no" />
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+<?php
+  if(is_single() && in_category('column')):
+    get_template_part('header_ogp');
+  endif;
+?>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>

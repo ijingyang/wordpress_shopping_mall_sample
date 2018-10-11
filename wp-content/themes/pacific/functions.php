@@ -144,4 +144,60 @@ function the_category_image() {
   }
   echo $image;
 }
+
+// コラムカテゴリーのみコメントできるようにする
+// なぜかコメントできない・・・保留で(Fix)
+// function comments_allow_only_column($post_id) {
+//   $open = true;
+//   if(!in_category('column')) {
+//     $open = false;
+//   }
+//   return $open;
+// }
+// add_filter('comments_open', 'comments_allow_only_column', 10);
+
+// OGPのための各種設定
+// アイキャッチ画像のURL取得
+function get_thumbnail_image_url() {
+  $image_id = get_post_thumbnail_id();
+  $image_url = wp_get_attachment_image_src($img_id, 'large', true);
+  return $img_url[0];
+}
+
+// OGP用Description取得
+function get_ogp_excerpted_content($content) {
+  $content = strip_tags($content);
+  $content = mb_substr($content, 0, 120, 'UTF-8');
+  $content = preg_replace('/\s\s+/', '', $content);
+  $content = preg_replace('/[\r\n]/', '', $content);
+  $content = esc_attr($content) . ' ...';
+  return $content;
+}
+
+// モール開発実績各ページのshortcode
+function posts_shortcode($args) {
+  $template = dirname(__FILE__) . '/posts.php';
+  if (!file_exists($template)) {
+    return;
+  }
+
+  $def = array(
+    'post_type' => 'shops',
+    'taxonomy' => 'mall',
+    'term' => '',
+    'orderby' => 'asc',
+    'posts_per_page' => -1,
+  );
+  $args = shortcode_atts($def, $args);
+  $posts = get_posts($args);
+  ob_start();
+  foreach ($posts as $post) {
+    $post_custom = get_post_custom($post->ID);
+    include($template);
+  }
+  $output = ob_get_clean();
+  return $output;
+}
+
+add_shortcode('posts', 'posts_shortcode');
  ?>
